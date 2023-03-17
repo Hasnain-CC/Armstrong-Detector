@@ -10,7 +10,7 @@ export const drawRect = (detections, ctx) => {
     ctx.strokeStyle = "#ffffff";
     ctx.font = "22px bold";
 
-    // Draw rectangles and text
+    // Draw rectangles and text around the object
     ctx.beginPath();
     ctx.fillStyle = "green";
     ctx.fillText(text, x, y - 4);
@@ -45,6 +45,7 @@ export const getObjectCount = (objects) => {
 };
 
 export const speakLength = (objects) => {
+  // code will speak the count when space bar is pressed on keyboard
   const msg = new SpeechSynthesisUtterance();
   document.body.onkeyup = function (e) {
     if (e.key === " " || e.code === "Space" || e.keyCode === 32) {

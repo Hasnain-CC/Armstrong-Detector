@@ -15,6 +15,12 @@ function App() {
   const [objects, setObjects] = useState([]);
   const msg = new SpeechSynthesisUtterance();
 
+  /*
+    commands for the useSpeechRecognition hook
+    - command `count` will tell you the count of the object on screen
+    - command `Hello` is a test command
+    - commad `reset` is to rest the transciption
+  */
   const commands = [
     {
       command: 'Hello',
@@ -79,6 +85,7 @@ function App() {
   }
 
   const runCoco = async () => {
+    // loading the @tensorflow-models/coco-ssd library
     const net = await cocossd.load();
     setInterval(() => {
       detect(net);
@@ -101,10 +108,13 @@ function App() {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
+      // detecting the objects in the streamed video
       const obj = await net.detect(video);
       const ctx = canvasRef.current.getContext("2d");
 
+      // function to draw lines around the detected object
       drawRect(obj, ctx);
+
       if (obj.length !== 0 && objects.length !== obj.length) {
         setObjects(obj);
       }
@@ -112,6 +122,7 @@ function App() {
   };
 
   const listenContinuously = () => {
+    // function to initiate the user listening
     SpeechRecognition.startListening({
       continuous: true,
       language: 'en-GB',
