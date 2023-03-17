@@ -64,6 +64,6 @@ export const speakLength = (objects) => {
 export const speakObjectCount = (objects) => {
   const msg = new SpeechSynthesisUtterance();
   msg.text = getObjectCount(objects);
-  msg.rate = 1;
+  msg.rate = 0.9;
   window.speechSynthesis.speak(msg);
 };

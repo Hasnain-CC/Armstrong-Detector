@@ -33,7 +33,7 @@ function App() {
       command: "Hello",
       callback: () => {
         msg.text = "Hello, how can i help you";
-        msg.rate = 1;
+        msg.rate = 0.9;
         window.speechSynthesis.speak(msg);
         resetTranscript();
       },
@@ -51,7 +51,7 @@ function App() {
       command: "reset",
       callback: () => {
         msg.text = "Okay, your wish is my command";
-        msg.rate = 1;
+        msg.rate = 0.9;
         window.speechSynthesis.speak(msg);
         resetTranscript();
       },
