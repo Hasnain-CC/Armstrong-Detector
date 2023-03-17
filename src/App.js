@@ -40,7 +40,7 @@ function App() {
       matchInterim: true,
     },
     {
-      command: "count",
+      command: "speak",
       callback: () => {
         speakObjectCount(objects);
         resetTranscript();
@@ -97,7 +97,7 @@ function App() {
     const net = await cocossd.load();
     setInterval(() => {
       detect(net);
-    }, 10);
+    }, 100);
   };
 
   const detect = async (net) => {
