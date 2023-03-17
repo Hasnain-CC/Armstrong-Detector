@@ -1,7 +1,7 @@
 
-# Armstrong Detector
+# Eagle Eye
 
-This is the frontend of the Armstrong Detector project written in React.js.
+This is the frontend of the Eagle Eye project written in React.js.
 
 ## Live Version
 
