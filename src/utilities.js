@@ -1,19 +1,24 @@
 export const drawRect = (detections, ctx) => {
-  detections.forEach((prediction) => {
+  const colors = ["green", "red", "yellow", "orange", "purple", "blue"];
+  detections.forEach((prediction, index) => {
     const [x, y, width, height] = prediction["bbox"];
-
     const text = `Object name: ${getObjectName(
       prediction
     )}, Confidence level: ${getScore(prediction)}%`;
 
+    const selectedColor =
+      index > colors.length
+        ? colors[Math.floor(Math.random() * colors.length)]
+        : colors[index];
     //Styling text
-    ctx.strokeStyle = "#ffffff";
+    ctx.strokeStyle = selectedColor;
     ctx.font = "22px bold";
 
     // Draw rectangles and text around the object
     ctx.beginPath();
-    ctx.fillStyle = "green";
+    ctx.fillStyle = selectedColor;
     ctx.fillText(text, x, y - 4);
+    ctx.lineWidth = "4";
     ctx.rect(x, y, width, height);
     ctx.stroke();
   });
@@ -59,6 +64,6 @@ export const speakLength = (objects) => {
 export const speakObjectCount = (objects) => {
   const msg = new SpeechSynthesisUtterance();
   msg.text = getObjectCount(objects);
-  msg.rate = 0.9;
+  msg.rate = 1;
   window.speechSynthesis.speak(msg);
 };

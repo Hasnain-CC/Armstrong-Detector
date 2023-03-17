@@ -2,8 +2,15 @@ import React, { useRef, useEffect, useState } from "react";
 import "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
-import { drawRect, getObjectCount, speakLength, speakObjectCount } from "./utilities";
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import {
+  drawRect,
+  getObjectCount,
+  speakLength,
+  speakObjectCount,
+} from "./utilities";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 import logo from "./assets/images/logo.png";
 
 import "./App.css";
@@ -23,34 +30,34 @@ function App() {
   */
   const commands = [
     {
-      command: 'Hello',
+      command: "Hello",
       callback: () => {
-        msg.text = 'Hello, how can i help you';
-        msg.rate = 0.9;
+        msg.text = "Hello, how can i help you";
+        msg.rate = 1;
         window.speechSynthesis.speak(msg);
-        resetTranscript()
+        resetTranscript();
       },
-      matchInterim: true
+      matchInterim: true,
     },
     {
-      command: 'count',
+      command: "count",
       callback: () => {
-        speakObjectCount(objects)
-        resetTranscript()
+        speakObjectCount(objects);
+        resetTranscript();
       },
-      matchInterim: true
+      matchInterim: true,
     },
     {
-      command: 'reset',
+      command: "reset",
       callback: () => {
-        msg.text = 'Okay, your wish is my command';
-        msg.rate = 0.9;
+        msg.text = "Okay, your wish is my command";
+        msg.rate = 1;
         window.speechSynthesis.speak(msg);
-        resetTranscript()
+        resetTranscript();
       },
-      matchInterim: true
+      matchInterim: true,
     },
-  ]
+  ];
 
   const {
     transcript,
@@ -62,7 +69,7 @@ function App() {
 
   useEffect(() => {
     runCoco();
-    listenContinuously()
+    listenContinuously();
   }, []);
 
   useEffect(() => {
@@ -70,18 +77,19 @@ function App() {
   }, [objects]);
 
   useEffect(() => {
-    if (finalTranscript !== '') {
-      console.log('Got final result:', finalTranscript);
-      resetTranscript()
+    if (finalTranscript !== "") {
+      resetTranscript();
     }
   }, [interimTranscript, finalTranscript]);
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return null;
   }
- 
+
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    console.log('Your browser does not support speech recognition software! Try Chrome desktop, maybe?');
+    console.log(
+      "Your browser does not support speech recognition software! Try Chrome desktop, maybe?"
+    );
   }
 
   const runCoco = async () => {
@@ -125,7 +133,7 @@ function App() {
     // function to initiate the user listening
     SpeechRecognition.startListening({
       continuous: true,
-      language: 'en-GB',
+      language: "en-us",
     });
   };
 
@@ -145,8 +153,8 @@ function App() {
   return (
     <div className="App">
       <header className="AppHeader">
-        <img src={logo} className="logo" alt="app-logo"/>
-        <h4>Team Armstrong</h4>
+        <img src={logo} className="logo" alt="app-logo" />
+        <h4>Armstrong's Detector</h4>
       </header>
       <Webcam ref={webcamRef} muted={true} style={canvasStyle} />
       <div className="mt-2">

@@ -17,13 +17,13 @@ The latest branch we're working on is named 'main'.
 Clone the project
 
 ```bash
-  git clone https://github.com/Hasnain-CC/Eagle-Eye.git
+  git clone https://github.com/Hasnain-CC/Armstrong-Detector.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd Eagle-Eye
+  cd Armstrong-Detector
 ```
 
 Install dependencies
