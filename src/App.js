@@ -1,14 +1,27 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
-import * as cocossd from '@tensorflow-models/coco-ssd';
+import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
+import { drawRect, getObjectCount, speakLength } from "./utilities";
+
+import logo from "./assets/images/logo.png";
+
 import "./App.css";
-import { drawRect } from "./utilities";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-  const msg = new SpeechSynthesisUtterance()
+  const [objects, setObjects] = useState([]);
+
+  useEffect(() => {
+    runCoco();
+  }, []);
+
+  useEffect(() => {
+    speakLength(objects);
+  }, [objects]);
+
   const runCoco = async () => {
     const net = await cocossd.load();
     setInterval(() => {
@@ -35,51 +48,44 @@ function App() {
       const obj = await net.detect(video);
       const ctx = canvasRef.current.getContext("2d");
 
-      // Text to speach un-comment the next 3 lines
-      // msg.text = `${obj.length} object detected`
-      // msg.rate = 0.7
-      // window.speechSynthesis.speak(msg)  
-      drawRect(obj, ctx)  
+      drawRect(obj, ctx);
+      if (obj.length !== 0 && objects.length !== obj.length) {
+        setObjects(obj);
+      }
     }
   };
 
-  useEffect(()=>{runCoco()},[]);
-
+  const canvasStyle = {
+    position: "absolute",
+    marginLeft: "auto",
+    marginRight: "auto",
+    top: 160,
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    zindex: 9,
+    width: 640,
+    height: 480,
+  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <Webcam
-          ref={webcamRef}
-          muted={true} 
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
-
-        <canvas
-          ref={canvasRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 8,
-            width: 640,
-            height: 480,
-          }}
-        />
+      <header className="AppHeader">
+        <img src={logo} className="logo" alt="app-logo"/>
+        <h4>Team Armstrong</h4>
       </header>
+      <Webcam ref={webcamRef} muted={true} style={canvasStyle} />
+      <div className="mt-2">
+        {objects.length ? (
+          <div>
+            <h4>{getObjectCount(objects)}</h4>
+            <p>Press space bar to read the count</p>
+          </div>
+        ) : null}
+      </div>
+      <div className="canvasDiv">
+        <canvas ref={canvasRef} style={canvasStyle} />
+      </div>
     </div>
   );
 }
