@@ -17,7 +17,7 @@ The latest branch we're working on is named 'main'.
 Clone the project
 
 ```bash
-  git clone https://github.com/Hasnain-CC/HackathonObjectDetection.git
+  git clone https://github.com/Hasnain-CC/Eagle-Eye.git
 ```
 
 Go to the project directory
