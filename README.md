@@ -3,7 +3,11 @@
 
 This is the frontend of the Armstrong Detector project written in React.js.
 
+## Live Version
 
+```bash
+  https://object-detection-52bb7.firebaseapp.com/
+```
 
 
 ## Run Locally
