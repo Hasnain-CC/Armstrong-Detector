@@ -40,7 +40,7 @@ function App() {
       matchInterim: true,
     },
     {
-      command: "speak",
+      command: "detect",
       callback: () => {
         speakObjectCount(objects);
         resetTranscript();
@@ -133,7 +133,7 @@ function App() {
     // function to initiate the user listening
     SpeechRecognition.startListening({
       continuous: true,
-      language: "en-us",
+      language: "en-GB",
     });
   };
 
