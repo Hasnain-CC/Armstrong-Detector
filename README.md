@@ -47,7 +47,7 @@ Start the server
 ### Library for Speach Recognition
 
 ```bash
-    react-speech-recognition
+  react-speech-recognition
 ```
 
 ## Usage
