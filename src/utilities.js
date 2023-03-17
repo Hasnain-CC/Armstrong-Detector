@@ -39,10 +39,8 @@ export const getObjectCount = (objects) => {
     const count = indivisualObjects[key];
     str += `${count} ${key}${count > 1 ? "s" : ""},`;
   }
-
   str = str.slice(0, str.length - 1);
   str += " detected";
-  console.log(str);
   return str;
 };
 
