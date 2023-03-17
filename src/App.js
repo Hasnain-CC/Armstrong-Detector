@@ -133,7 +133,7 @@ function App() {
     position: "absolute",
     marginLeft: "auto",
     marginRight: "auto",
-    top: 160,
+    top: 180,
     left: 0,
     right: 0,
     textAlign: "center",
