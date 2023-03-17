@@ -39,10 +39,10 @@ Start the server
 ### Libraries for Object detection 
 
 ```bash
-    @tensorflow-models/coco-ssd
+  @tensorflow-models/coco-ssd
 ```
 ```bash
-    @tensorflow/tfjs
+  @tensorflow/tfjs
 ``` 
 ### Library for Speach Recognition
 
@@ -52,5 +52,5 @@ Start the server
 
 ## Usage
 
-#### Using this project you one can detect the object in front of the camera
-#### With a single speach command one can get the count of the objects detected
+#### - Using this project you one can detect the object in front of the camera
+#### - With a single speach command one can get the count of the objects detected
