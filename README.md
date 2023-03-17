@@ -23,7 +23,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd HackathonObjectDetection
+  cd Eagle-Eye
 ```
 
 Install dependencies
