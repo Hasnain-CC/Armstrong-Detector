@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
-import * as tf from "@tensorflow/tfjs";
+import "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
-import { drawRect, getObjectCount, speakLength } from "./utilities";
-
+import { drawRect, getObjectCount, speakLength, speakObjectCount } from "./utilities";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import logo from "./assets/images/logo.png";
 
 import "./App.css";
@@ -13,14 +13,70 @@ function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [objects, setObjects] = useState([]);
+  const msg = new SpeechSynthesisUtterance();
+
+  const commands = [
+    {
+      command: 'Hello',
+      callback: () => {
+        msg.text = 'Hello, how can i help you';
+        msg.rate = 0.9;
+        window.speechSynthesis.speak(msg);
+        resetTranscript()
+      },
+      matchInterim: true
+    },
+    {
+      command: 'count',
+      callback: () => {
+        speakObjectCount(objects)
+        resetTranscript()
+      },
+      matchInterim: true
+    },
+    {
+      command: 'reset',
+      callback: () => {
+        msg.text = 'Okay, your wish is my command';
+        msg.rate = 0.9;
+        window.speechSynthesis.speak(msg);
+        resetTranscript()
+      },
+      matchInterim: true
+    },
+  ]
+
+  const {
+    transcript,
+    interimTranscript,
+    finalTranscript,
+    resetTranscript,
+    listening,
+  } = useSpeechRecognition({ commands });
 
   useEffect(() => {
     runCoco();
+    listenContinuously()
   }, []);
 
   useEffect(() => {
     speakLength(objects);
   }, [objects]);
+
+  useEffect(() => {
+    if (finalTranscript !== '') {
+      console.log('Got final result:', finalTranscript);
+      resetTranscript()
+    }
+  }, [interimTranscript, finalTranscript]);
+
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    return null;
+  }
+ 
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    console.log('Your browser does not support speech recognition software! Try Chrome desktop, maybe?');
+  }
 
   const runCoco = async () => {
     const net = await cocossd.load();
@@ -53,6 +109,13 @@ function App() {
         setObjects(obj);
       }
     }
+  };
+
+  const listenContinuously = () => {
+    SpeechRecognition.startListening({
+      continuous: true,
+      language: 'en-GB',
+    });
   };
 
   const canvasStyle = {
